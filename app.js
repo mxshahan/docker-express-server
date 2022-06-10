@@ -3,7 +3,7 @@ const path = require('path');
 
 const app = express();
 
-app.get('/*', function (req, res) {
+app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
@@ -16,7 +16,7 @@ app.get('/api/v1/user', (req, res) => {
     success: true,
     message: 'User fetched',
     user: {
-      fullname: 'Hello company',
+      fullname: 'Hello',
       email: "user@gmail.com",
       phone: "+880293938383"
     },
