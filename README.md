@@ -84,3 +84,10 @@ Example: `docker run -v $(pwd):/app:ro  -v /app/node_modules -e PORT=4000 -p 808
 ### To use Environment variable using .env file we need to follow this command along with flag `--env-file` and path of the env file
 
 Example: `docker run -v $(pwd):/app:ro  -v /app/node_modules --env-file ./.env -p 8080:5000 -d --name node-app node-app-image`
+
+## Managing Docker Volume
+
+- List all running volume `docker volume ls`
+- To delete all unused volume except accociated container `docker volume prune`
+- To delete volume along with docker container `docker rm node-app -fv`
+
