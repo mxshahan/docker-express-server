@@ -8,7 +8,8 @@ app.set('view engine', 'hbs');
 
 app.get('/', function (req, res) {
   res.render('index', {
-    name: "Docker"
+    name: "Docker",
+    title: "Setup docker compose and run docker"
   });
 });
 

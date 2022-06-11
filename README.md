@@ -152,3 +152,37 @@ Note: In production we don't have any volume. so we don't need to pass `-v` flag
 
 <!-- TODAY SESSION: 1:42:53
 https://www.youtube.com/watch?v=9zUHg7xjIqQ -->
+
+
+# Setup MongoDB Database
+
+To setup mongo in our docker we need to get `mongo` official image
+
+use this configuration in `docker-compose.yml` file
+
+```
+  mongo: 
+    image: mongo
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo-db:/data/db
+```
+
+> Here `image: mongo` which is docker official mongo image <br>
+> we need to add environment variable as `MONGO_INITDB_ROOT_USERNAME` and `MONGO_INITDB_ROOT_PASSWORD` and the value is anything
+
+**Note:** when we down our composer we pass -v flag which will delete all volume including mongodb. The problem is we will loose data if we delete all volumes. To prevent this we need to add `volume` in `docker-compose.yml` file and when we run it will throw an error. So it's simple. We need to whitelist these name volume in `docker-compose.yml` in root
+
+```
+volumes:
+  mongo-db:
+```
+
+after that we will run our docker compose file.
+
+> When we will close our docker compose we will not pass `-v` flag which will not remove volumes. After runnign docker compose we should do the following 
+> - `docker volume prune` which will remove all unused volume
+
+#### Let's dive into connecting mongodb with our express server ####
