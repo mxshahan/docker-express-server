@@ -7,7 +7,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.get('/', function (req, res) {
-  res.render('index');
+  res.render('index', {
+    name: "Docker"
+  });
 });
 
 app.get('/about', function (req, res) {
@@ -34,5 +36,5 @@ app.get('/api/v1/user', (req, res) => {
   });
 });
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`App listening port ${port}`));

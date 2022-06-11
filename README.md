@@ -91,3 +91,56 @@ Example: `docker run -v $(pwd):/app:ro  -v /app/node_modules --env-file ./.env -
 - To delete all unused volume except accociated container `docker volume prune`
 - To delete volume along with docker container `docker rm node-app -fv`
 
+## Managing of Docker Compose
+
+- Create a `docker-compose.yml` file add all flag in it
+- To get information `docker-compose up --help`
+- Run our app using docker compose `docker-compose up -d`
+
+
+## Managing docker-compose for development and production mode
+
+*** Create three files ***
+- `docker-compose.yml` which will be common file
+- `docker-compose.dev.yml` which will be for development
+- `docker-compose.prod.yml` which will be for production
+
+Now update `package.json` file and update scripts `npm start` to `node app.js` and for `npm run dev` to `nodemon -L app.js`
+
+### So in production we don't want to install devDependencies. To do so we need to update `Dockerfile` and update `npm install` to some bash script
+
+```
+ARG NODE_ENV
+RUN if [ "$NODE_ENV" = "development" ]; \
+      then npm install; \
+      else  npm install --only-production;\
+    fi
+```
+
+> Here we are passing ARG `NODE_ENV` which will be passed from `docker-compose.dev.yml` and `docker-compose.prod.yml` inside build command. Add the following in docker compose file
+
+*** In dev file ***
+```
+build: 
+  context: .
+  args: 
+    NODE_ENV: development
+```
+
+
+*** In prod file ***
+```
+build: 
+  context: .
+  args: 
+    NODE_ENV: production
+```
+
+*** pretty simple ***
+
+> And run this command <br>
+> `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build`
+
+- `-f` flag define file where we defined 2 docker-compose file. One for common and another for production
+- `-d` flag for detach
+- `--build` which will build our docker image. without `--build` docker will just restart. Image will not build
