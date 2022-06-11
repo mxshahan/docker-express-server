@@ -5,7 +5,7 @@ A simple webapp that connect with docker
 The requiremement to start Docker
 
 [x] Install Docker client in local pc
-[x] 
+
 
 ## Create a Dockerfile in root directory
 
