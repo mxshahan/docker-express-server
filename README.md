@@ -100,7 +100,7 @@ Example: `docker run -v $(pwd):/app:ro  -v /app/node_modules --env-file ./.env -
 
 ## Managing docker-compose for development and production mode (ENV specific docker file)
 
-*** Create three files ***
+**Create three files**
 - `docker-compose.yml` which will be common file
 - `docker-compose.dev.yml` which will be for development
 - `docker-compose.prod.yml` which will be for production
@@ -119,7 +119,7 @@ RUN if [ "$NODE_ENV" = "development" ]; \
 
 > Here we are passing ARG `NODE_ENV` which will be passed from `docker-compose.dev.yml` and `docker-compose.prod.yml` inside build command. Add the following in docker compose file
 
-*** In dev file ***
+**In dev file**
 ```
 build: 
   context: .
@@ -128,7 +128,7 @@ build:
 ```
 
 
-*** In prod file ***
+**In prod file**
 ```
 build: 
   context: .
@@ -136,8 +136,7 @@ build:
     NODE_ENV: production
 ```
 
-*** pretty simple ***
-
+**pretty simple**
 > And run this command <br>
 > `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build`
 
@@ -149,4 +148,4 @@ build:
 
 Note: In production we don't have any volume. so we don't need to pass `-v` flag while closing container. But for development we need to pass it
 
-*** Example: *** `docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v`
+**Example:** `docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v`
