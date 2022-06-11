@@ -109,7 +109,7 @@ Now update `package.json` file and update scripts `npm start` to `node app.js` a
 
 ### So in production we don't want to install devDependencies. To do so we need to update `Dockerfile` and update `npm install` to some bash script
 
-```
+```Dockerfile
 ARG NODE_ENV
 RUN if [ "$NODE_ENV" = "development" ]; \
       then npm install; \
@@ -120,7 +120,7 @@ RUN if [ "$NODE_ENV" = "development" ]; \
 > Here we are passing ARG `NODE_ENV` which will be passed from `docker-compose.dev.yml` and `docker-compose.prod.yml` inside build command. Add the following in docker compose file
 
 **In dev file**
-```
+```yml
 build: 
   context: .
   args: 
@@ -129,7 +129,7 @@ build:
 
 
 **In prod file**
-```
+```yml
 build: 
   context: .
   args: 
@@ -160,7 +160,7 @@ To setup mongo in our docker we need to get `mongo` official image
 
 use this configuration in `docker-compose.yml` file
 
-```
+```yml
   mongo: 
     image: mongo
     environment: 
@@ -175,7 +175,7 @@ use this configuration in `docker-compose.yml` file
 
 **Note:** when we down our composer we pass -v flag which will delete all volume including mongodb. The problem is we will loose data if we delete all volumes. To prevent this we need to add `volume` in `docker-compose.yml` file and when we run it will throw an error. So it's simple. We need to whitelist these name volume in `docker-compose.yml` in root
 
-```
+```yml
 volumes:
   mongo-db:
 ```
