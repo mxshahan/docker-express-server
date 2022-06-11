@@ -47,12 +47,40 @@ To solve this we need to `sync` our local folder into docker container.
 - Here `local_path` is our local project directory.
 - And `docker_path` is our docker file directory which we defined `/app`.
 
-
-### We can also use a shortcut for local_path
+#### We can also use a shortcut for local_path
 - for windows command shell use %cd%
 - for windows power shell use ${pwd}
 - for Mac use $(pwd)
 
+
+Example: `docker run -v $(pwd):/app -p 8080:8080 -d --name node-app node-app-image`
+
 that will grab current directory
 
 > If nodemon doesn't restart in docker pass -L flag
+
+
+<!-- TODAY SESSION: 56:25
+https://www.youtube.com/watch?v=9zUHg7xjIqQ -->
+
+
+# Syncing with docker container
+
+### We don't want to watch `node_modules` folder with docker container. But if we delete `node_modules` from local directory it delete from docker container as well. To prevent this we need to follow these stese. 
+> For this we need add another extra `volume` flag and add parameter as `/app/node_modules`
+> `docker run -v $(pwd):/app -v /app/node_modules -p 8080:8080 -d --name node-app node-app-image`
+
+### Now we don't want to docker to change our file. If we create any file inside docker container it impact on our local directory. So to prevent this we need to make docker container `read-only`. 
+
+> use same command and use extra option after docker_path name using colon (:)
+> `docker run -v $(pwd):/app:ro  -v /app/node_modules -p 8080:8080 -d --name node-app node-app-image`
+
+
+## Use of Environment Variables
+### To use Environment variable in command, we need to use -e flag or --env flag and use our port. 
+
+Example: `docker run -v $(pwd):/app:ro  -v /app/node_modules -e PORT=4000 -p 8080:4000 -d --name node-app node-app-image`
+
+### To use Environment variable using .env file we need to follow this command along with flag `--env-file` and path of the env file
+
+Example: `docker run -v $(pwd):/app:ro  -v /app/node_modules --env-file ./.env -p 8080:5000 -d --name node-app node-app-image`
