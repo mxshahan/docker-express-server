@@ -98,7 +98,7 @@ Example: `docker run -v $(pwd):/app:ro  -v /app/node_modules --env-file ./.env -
 - Run our app using docker compose `docker-compose up -d`
 
 
-## Managing docker-compose for development and production mode
+## Managing docker-compose for development and production mode (ENV specific docker file)
 
 *** Create three files ***
 - `docker-compose.yml` which will be common file
@@ -144,3 +144,9 @@ build:
 - `-f` flag define file where we defined 2 docker-compose file. One for common and another for production
 - `-d` flag for detach
 - `--build` which will build our docker image. without `--build` docker will just restart. Image will not build
+
+> To delete docker container run same command and replace up -> down and remove `--build` flag and add `-v` flag which will delete all associated volume
+
+Note: In production we don't have any volume. so we don't need to pass `-v` flag while closing container. But for development we need to pass it
+
+*** Example: *** `docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v`
