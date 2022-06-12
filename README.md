@@ -12,7 +12,7 @@ Do the step bellow
 * Create a Dockerfile in root directory. 
 * Add the following code
 
-```docker
+```Dockerfile
 FROM node:14
 WORKDIR /app
 COPY package.json .
