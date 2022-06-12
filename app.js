@@ -1,15 +1,16 @@
 const express = require('express');
 const path = require('path');
-
 const app = express();
+
+require('./config/db');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.get('/', function (req, res) {
   res.render('index', {
-    name: "Docker",
-    title: "Setup docker compose and run docker"
+    name: 'Docker',
+    title: 'Setup docker compose and run docker',
   });
 });
 

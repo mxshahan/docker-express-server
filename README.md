@@ -7,9 +7,29 @@ The requiremement to start Docker
 [x] Install Docker client in local pc
 
 
-## Create a Dockerfile in root directory
-
+## Managing Dockerfile
 Do the step bellow
+* Create a Dockerfile in root directory. 
+* Add the following code
+
+```docker
+FROM node:14
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY . ./
+EXPOSE 3000
+CMD ["node", "app.js"]
+```
+
+#### Explaination: 
+- We selected node:14 as node version 14
+- work directory /app (We can name it anything)
+- copy our package.json into /app directory
+- Then install all dependency in docker container
+- Then copy all file into /app folder where (. means our current directory and ./ means our docker container directory)
+- Then open port 3000
+- Then node command (We all know what is going on by this command)
 
 ## build docker image
 `docker build . -t node-app-image` -t flag represent image name
@@ -186,3 +206,25 @@ after that we will run our docker compose file.
 > - `docker volume prune` which will remove all unused volume
 
 #### Let's dive into connecting mongodb with our express server ####
+
+```js
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://username:password@docker-ip-address/my_database');
+
+```
+
+> To check IP address of docker run this command<br>
+> `docker inspect docker_mongo_1` where `docker_mongo_1` is my mongo docker container name, for you it might be different. <br>
+> Also instead of using ip address we can use `mongo` as host
+
+#### Finishing up with mongodb
+
+When we will build our docker compose we need mongo installed. So mongo needs to run first. To do this syncronously we need to pass the code bellow inside node-app container in `docker-compose.yml` file
+
+```yml
+depends_on: 
+  - mongo
+```
+
+
