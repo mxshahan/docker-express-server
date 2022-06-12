@@ -176,7 +176,8 @@ https://www.youtube.com/watch?v=9zUHg7xjIqQ -->
 
 # Setup MongoDB Database
 
-To setup mongo in our docker we need to get `mongo` official image
+To setup mongo in our docker we need to get `mongo` official image from docker official site
+`https://hub.docker.com/`
 
 use this configuration in `docker-compose.yml` file
 
@@ -228,3 +229,14 @@ depends_on:
 ```
 
 
+# Setting up Redis
+
+To setup redis database in our docker we need to get `redis` official image from docker official site
+`https://hub.docker.com/`
+
+Add this section under services
+
+```yml
+  redis:
+    image: redis
+```

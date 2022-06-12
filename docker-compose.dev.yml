@@ -10,4 +10,5 @@ services:
       - /app/node_modules
     environment: 
       - NODE_ENV=development
+      - SESSION_SECRET=secret
     command: npm run dev
